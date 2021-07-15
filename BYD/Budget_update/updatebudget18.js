@@ -10,8 +10,8 @@
 	
     let tmpl = document.createElement('template');
     tmpl.innerHTML = `
+	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <button id="updatebudget">Valider les budgets</button>
-				 
     `;
 
     customElements.define('com-sap-sample-helloworld1', class HelloWorld1 extends HTMLElement {
@@ -38,6 +38,19 @@
 		_submit(e) {
 			e.preventDefault();
             UI5(null, this);
+			
+			var restAPIURL = "https://www.google.com";
+			$.ajax({
+				url: restAPIURL,
+				type: 'POST',
+				contentType: 'application/x-www-form-urlencoded',
+				success: function(data) {
+					console.log(data);
+				},
+				error: function(e) {
+					console.log("error: " + e);
+				}
+			});
 		}
 		
         onCustomWidgetAfterUpdate(changedProperties) {
