@@ -12,7 +12,7 @@
         {
 			"kind": "main",
 			"tag": "com-sap-sample-helloworld1",
-            "url": "https://davidhstocker.github.io/SAC_CustomWidget_HelloWorld_1/webcomponent.js",
+            "url": "https://github.com/moioo91120/SAC/blob/main/BYD/Budget_update/updatebudget_webelement.js",
             "integrity": "",
             "ignoreIntegrity" : true
         }
