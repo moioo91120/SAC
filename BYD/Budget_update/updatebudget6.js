@@ -36,7 +36,6 @@
 		_submit(e) {
 			e.preventDefault();
             UI5(this);
-			console.log("chicked");
 		}
 
 
@@ -159,6 +158,7 @@
     function UI5(that) {
         var that_ = that;
         var restAPIURL = "https://www.google.com";
+		console.log("in UI5");
 
         sap.ui.getCore().attachInit(function() {
             "use strict";
@@ -173,9 +173,11 @@
                 "use strict";
 
                 return Controller.extend("myView.Template", {
+					console.log("In controller");
 
                     onButtonPress: function(oEvent) {
-
+						
+						console.log("call url " + restAPIURL);
 
                         $.ajax({
                             url: restAPIURL,
