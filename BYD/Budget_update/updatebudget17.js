@@ -11,7 +11,7 @@
     let tmpl = document.createElement('template');
     tmpl.innerHTML = `
         <button id="updatebudget">Valider les budgets</button>
-				
+				 
     `;
 
     customElements.define('com-sap-sample-helloworld1', class HelloWorld1 extends HTMLElement {
