@@ -28,16 +28,16 @@
             this._export_settings.name = "";
 
 			
-			this._shadowRoot.getElementById("updatebudget").addEventListener("click", this._submit.bind(this));
+			//this._shadowRoot.getElementById("updatebudget").addEventListener("click", this._submit.bind(this));
             this._firstConnection = false;
             this._firstConnectionUI5 = 0;
 		}
 
-		_submit(e) {
-			e.preventDefault();
-			
-            UI5(null, this);
-		}
+		//_submit(e) {
+		//	e.preventDefault();
+		//	
+         //   UI5(null, this);
+		//}
 		
         onCustomWidgetAfterUpdate(changedProperties) {
             UI5(changedProperties, this);
@@ -199,36 +199,37 @@
             ], function(jQuery, Controller, MessageToast, MessageBox) {
                 "use strict";
 
-                return Controller.extend("myView.Template", {
+			  return Controller.extend("sap.ui.myApp.controller.App",{
+				  
+				  
+					onInit:function(){
+						console.log("call api " + restAPIURL);
+						$.ajax({
+							url: restAPIURL,
+							type: 'POST',
+							contentType: 'application/x-www-form-urlencoded',
+							success: function(data) {
+								console.log(data);
 
-                    onButtonPress: function(oEvent) {
+								that._firePropertiesChanged();
+								this.settings = {};
+								this.settings.score = "";
+
+								that.dispatchEvent(new CustomEvent("onStart", {
+									detail: {
+										settings: this.settings
+									}
+								}));
+
+							},
+							error: function(e) {
+								console.log("error: " + e);
+							}
+						});
 						
-						console.log("call url " + restAPIURL);
-
-                        $.ajax({
-                            url: restAPIURL,
-                            type: 'POST',
-                            contentType: 'application/x-www-form-urlencoded',
-                            success: function(data) {
-                                console.log(data);
-
-                                that._firePropertiesChanged();
-                                this.settings = {};
-                                this.settings.score = "";
-
-                                that.dispatchEvent(new CustomEvent("onStart", {
-                                    detail: {
-                                        settings: this.settings
-                                    }
-                                }));
-
-                            },
-                            error: function(e) {
-                                console.log("error: " + e);
-                            }
-                        });
-                    }
-                });
+					},
+				  
+			  });
             });
 
         });
