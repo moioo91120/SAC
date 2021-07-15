@@ -43,49 +43,44 @@
             this._firstConnection = false;
             this._firstConnectionUI5 = 0;
 			
-			
-			sap.ui.getCore().attachInit(function() {
+			sap.ui.require([
+				"jquery.sap.global",
+				"sap/m/Button",
+				"sap/m/MessageToast"
+			], function (Button, MessageToast) {
 				"use strict";
 
-				sap.ui.require([
-					"jquery.sap.global",
-					"sap/m/Button",
-					"sap/m/MessageToast"
-				], function (Button, MessageToast) {
-					"use strict";
+				new Button({
+					text: "Ready...",
+					press: function () {
+						MessageToast.show("Hello World!");
+						$.ajax({
+							url: restAPIURL,
+							type: 'POST',
+							contentType: 'application/x-www-form-urlencoded',
+							success: function(data) {
+								console.log(data);
 
-					new Button({
-						text: "Ready...",
-						press: function () {
-							MessageToast.show("Hello World!");
-							$.ajax({
-								url: restAPIURL,
-								type: 'POST',
-								contentType: 'application/x-www-form-urlencoded',
-								success: function(data) {
-									console.log(data);
+								that._firePropertiesChanged();
+								this.settings = {};
+								this.settings.score = "";
 
-									that._firePropertiesChanged();
-									this.settings = {};
-									this.settings.score = "";
+								that.dispatchEvent(new CustomEvent("onStart", {
+									detail: {
+										settings: this.settings
+									}
+								}));
 
-									that.dispatchEvent(new CustomEvent("onStart", {
-										detail: {
-											settings: this.settings
-										}
-									}));
+							},
+							error: function(e) {
+								console.log("error: " + e);
+							}
+						});
+					}
+				}).placeAt("content");
 
-								},
-								error: function(e) {
-									console.log("error: " + e);
-								}
-							});
-						}
-					}).placeAt("content");
-
-				});
-				
 			});
+		
 		}
 
 		_submit(e) {
