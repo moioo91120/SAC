@@ -20,6 +20,7 @@
 
 		_submit(e) {
 			e.preventDefault();
+            UI5(this);
 			console.log("chicked");
 		}
 
@@ -64,4 +65,63 @@
         redraw(){
         }
     });
+	
+	
+	
+    function UI5(that) {
+        var that_ = that;
+
+        sap.ui.getCore().attachInit(function() {
+            "use strict";
+
+            //### Controller ###
+            sap.ui.define([
+                "jquery.sap.global",
+                "sap/ui/core/mvc/Controller",
+                "sap/m/MessageToast",
+                "sap/m/MessageBox",
+                "sap/m/BusyDialog"
+            ], function(jQuery, Controller, MessageToast, MessageBox, BusyDialog) {
+                "use strict";
+
+                var busyDialog = (busyDialog) ? busyDialog : new BusyDialog({});
+
+                return Controller.extend("myView.Template", {
+
+                    onButtonPress: function(oEvent) {
+                        var this_ = this;
+                        var CLIENT_ID_str = '_client_id_';
+                        var CLIENT_SECRET_str = '_client_secret';
+
+						$.ajax({
+                            type: 'POST',
+                            url: "https://_url_token_/uaa-security/oauth/token",
+                            contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+                            crossDomain:true,
+                            cache : true, 
+                            dataType: 'json',
+
+                            success: function (data) {
+                                console.log(data);
+
+                            },
+                            error: function (e) {
+                                this_.runNext();
+                                console.log(e.responseText);
+                            }
+                        });
+                    },
+
+                    wasteTime: function() {
+                        busyDialog.open();
+                    },
+
+                    runNext: function() {
+                        busyDialog.close();
+                    },
+                });
+            });
+
+        });
+    }
 })();
