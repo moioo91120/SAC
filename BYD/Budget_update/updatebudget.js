@@ -11,7 +11,7 @@
 			super(); 
 			this._shadowRoot = this.attachShadow({mode: "open"});
             this._shadowRoot.appendChild(tmpl.content.cloneNode(true));
-			this._shadowRoot.getElementById("form").addEventListener("click", this._submit.bind(this));
+			this._shadowRoot.getElementById("updatebudget").addEventListener("click", this._submit.bind(this));
             this._firstConnection = false;
             this.addEventListener("click", event => {
                 console.log('click');
