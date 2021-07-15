@@ -163,6 +163,9 @@
         var that_ = that;
         var restAPIURL = "https://www.google.com";
 		console.log("in UI5");
+        div = document.createElement('div');
+        widgetName = "mywidget";
+        div.slot = "content_" + widgetName;
 		
         if (that._firstConnectionUI5 === 0) {
             console.log("--First Time --");
@@ -175,7 +178,6 @@
             div1.innerHTML = '<div id="ui5_content_' + widgetName + '" name="ui5_content_' + widgetName + '"><slot name="content_' + widgetName + '"></slot></div>';
             that_._shadowRoot.appendChild(div1);
 
-            that_.appendChild(div);
 
             var mapcanvas_divstr = that_._shadowRoot.getElementById('oView_' + widgetName);
 
