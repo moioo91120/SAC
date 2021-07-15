@@ -12,16 +12,6 @@
     tmpl.innerHTML = `
         <button id="updatebudget">Valider les budgets</button>
 				
-		<script id="sap-ui-bootstrap"
-			src="https://openui5.hana.ondemand.com/resources/sap-ui-core.js"
-			data-sap-ui-theme="sap_belize"
-			data-sap-ui-libs="sap.m"
-			data-sap-ui-resourceroots='{"Quickstart": "./"}'
-			data-sap-ui-onInit="module:Quickstart/index"
-			data-sap-ui-compatVersion="edge"
-			data-sap-ui-async="true">
-		</script>
-		<body class="sapUiBody" id="content"></body>
     `;
 
     customElements.define('com-sap-sample-helloworld1', class HelloWorld1 extends HTMLElement {
@@ -43,44 +33,6 @@
             this._firstConnection = false;
             this._firstConnectionUI5 = 0;
 			
-			sap.ui.require([
-				"jquery.sap.global",
-				"sap/m/Button",
-				"sap/m/MessageToast"
-			], function (Button, MessageToast) {
-				"use strict";
-
-				new Button({
-					text: "Ready...",
-					press: function () {
-						MessageToast.show("Hello World!");
-						$.ajax({
-							url: restAPIURL,
-							type: 'POST',
-							contentType: 'application/x-www-form-urlencoded',
-							success: function(data) {
-								console.log(data);
-
-								that._firePropertiesChanged();
-								this.settings = {};
-								this.settings.score = "";
-
-								that.dispatchEvent(new CustomEvent("onStart", {
-									detail: {
-										settings: this.settings
-									}
-								}));
-
-							},
-							error: function(e) {
-								console.log("error: " + e);
-							}
-						});
-					}
-				}).placeAt("content");
-
-			});
-		
 		}
 
 		_submit(e) {
@@ -275,9 +227,20 @@
 							}
 						});
 					}
-				}).placeAt("content");
+				});
 
 			});
+			
+            console.log("widgetName:" + widgetName);
+            var foundIndex = Ar.findIndex(x => x.id == widgetName);
+            var divfinal = Ar[foundIndex].div;
+
+            //### THE APP: place the XMLView somewhere into DOM ###
+            var oView = sap.ui.xmlview({
+                viewContent: jQuery(divfinal).html(),
+            });
+
+            oView.placeAt(div);
 			
 			/*
             //### Controller ###
@@ -325,16 +288,6 @@
             });
 
 
-            console.log("widgetName:" + widgetName);
-            var foundIndex = Ar.findIndex(x => x.id == widgetName);
-            var divfinal = Ar[foundIndex].div;
-
-            //### THE APP: place the XMLView somewhere into DOM ###
-            var oView = sap.ui.xmlview({
-                viewContent: jQuery(divfinal).html(),
-            });
-
-            oView.placeAt(div);
 			*/
         });
     }
