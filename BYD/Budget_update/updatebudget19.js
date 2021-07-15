@@ -37,12 +37,11 @@
 
 		_submit(e) {
 			e.preventDefault();
-            UI5(null, this);
 			
-			var restAPIURL = "https://www.google.com";
+			var restAPIURL = "https://random-data-api.com/api/beer/random_beer";
 			$.ajax({
 				url: restAPIURL,
-				type: 'POST',
+				type: 'GET',
 				contentType: 'application/x-www-form-urlencoded',
 				success: function(data) {
 					console.log(data);
