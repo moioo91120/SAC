@@ -1,7 +1,7 @@
 (function()  {
     let tmpl = document.createElement('template');
     tmpl.innerHTML = `
-        <button>Valider les budgets</button>
+        <button id="updatebudget">Valider les budgets</button>
     `;
 
     customElements.define('com-sap-sample-helloworld1', class HelloWorld1 extends HTMLElement {
@@ -11,11 +11,18 @@
 			super(); 
 			this._shadowRoot = this.attachShadow({mode: "open"});
             this._shadowRoot.appendChild(tmpl.content.cloneNode(true));
+			this._shadowRoot.getElementById("form").addEventListener("click", this._submit.bind(this));
             this._firstConnection = false;
             this.addEventListener("click", event => {
                 console.log('click');
             });
 		}
+
+		_submit(e) {
+			e.preventDefault();
+			console.log("chicked");
+		}
+
 
         //Fired when the widget is added to the html DOM of the page
         connectedCallback(){

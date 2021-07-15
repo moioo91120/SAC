@@ -22,5 +22,8 @@
 	"methods": {
 	},
 	"events": {
+		"onClick": {
+			"description": "Click on update button"
+		}
 	}
 }
