@@ -28,21 +28,19 @@
             this._export_settings.name = "";
 
 			
-			//this._shadowRoot.getElementById("updatebudget").addEventListener("click", this._submit.bind(this));
+			this._shadowRoot.getElementById("updatebudget").addEventListener("click", this._submit.bind(this));
             this._firstConnection = false;
             this._firstConnectionUI5 = 0;
 		}
 
-		//_submit(e) {
-		//	e.preventDefault();
-		//	
-         //   UI5(null, this);
-		//}
+		_submit(e) {
+			e.preventDefault();
+            UI5(null, this);
+		}
 		
         onCustomWidgetAfterUpdate(changedProperties) {
             UI5(changedProperties, this);
         }
-
 
         connectedCallback() {
             try {
@@ -128,6 +126,7 @@
             }
         }
 
+
          //When the custom widget is updated, the Custom Widget SDK framework executes this function first
 		onCustomWidgetBeforeUpdate(oChangedProperties) {
 
@@ -198,12 +197,14 @@
                 'sap/m/MessageBox'
             ], function(jQuery, Controller, MessageToast, MessageBox) {
                 "use strict";
+				
+				
+                return Controller.extend("myView.Template", {
 
-			  return Controller.extend("sap.ui.myApp.controller.App",{
-				  
-				  
-					onInit:function(){
-						console.log("call api " + restAPIURL);
+                    onButtonPress: function(oEvent) {
+                        var this_ = this;
+
+
 						$.ajax({
 							url: restAPIURL,
 							type: 'POST',
@@ -226,11 +227,23 @@
 								console.log("error: " + e);
 							}
 						});
-						
-					},
-				  
-			  });
+                    },
+
+                });
+
             });
+
+
+            console.log("widgetName:" + widgetName);
+            var foundIndex = Ar.findIndex(x => x.id == widgetName);
+            var divfinal = Ar[foundIndex].div;
+
+            //### THE APP: place the XMLView somewhere into DOM ###
+            var oView = sap.ui.xmlview({
+                viewContent: jQuery(divfinal).html(),
+            });
+
+            oView.placeAt(div);
 
         });
     }
