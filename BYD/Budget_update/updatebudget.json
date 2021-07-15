@@ -12,15 +12,8 @@
   "webcomponents": [
     {
       "kind": "main",
-      "tag": "com.apsia.sap.sac.restapi",
-      "url": "http://localhost/SAC/sacrestapi/restapi.js",
-      "integrity": "",
-      "ignoreIntegrity": true
-    },
-    {
-      "kind": "styling",
-      "tag": "com-apsia-sap-sac-restapi-aps",
-      "url": "http://localhost/SAC/sacrestapi/restapi_aps.js",
+      "tag": "com-apsia-sap-sac-restapi",
+      "url": "https://moioo91120.github.io/SAC/BYD/Budget_update/updatebudget.js",
       "integrity": "",
       "ignoreIntegrity": true
     }
