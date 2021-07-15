@@ -11,6 +11,16 @@
     let tmpl = document.createElement('template');
     tmpl.innerHTML = `
         <button id="updatebudget">Valider les budgets</button>
+				
+		<script id="sap-ui-bootstrap"
+			src="https://openui5.hana.ondemand.com/resources/sap-ui-core.js"
+			data-sap-ui-theme="sap_belize"
+			data-sap-ui-libs="sap.m"
+			data-sap-ui-resourceroots='{"Quickstart": "./"}'
+			data-sap-ui-onInit="module:Quickstart/index"
+			data-sap-ui-compatVersion="edge"
+			data-sap-ui-async="true">
+		</script>
 		<body class="sapUiBody" id="content"></body>
     `;
 
