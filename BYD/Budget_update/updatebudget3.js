@@ -1,4 +1,13 @@
 (function()  {
+    let _shadowRoot;
+    let _id;
+    let _score;
+
+    let div;
+    let Ar = [];
+    let widgetName;
+	
+	
     let tmpl = document.createElement('template');
     tmpl.innerHTML = `
         <button id="updatebudget">Valider les budgets</button>
@@ -11,11 +20,17 @@
 			super(); 
 			this._shadowRoot = this.attachShadow({mode: "open"});
             this._shadowRoot.appendChild(tmpl.content.cloneNode(true));
+			
+            _id = createGuid();
+            this._export_settings = {};
+            this._export_settings.restapiurl = "";
+            this._export_settings.score = "";
+            this._export_settings.name = "";
+
+			
 			this._shadowRoot.getElementById("updatebudget").addEventListener("click", this._submit.bind(this));
             this._firstConnection = false;
-            this.addEventListener("click", event => {
-                console.log('click');
-            });
+            this._firstConnectionUI5 = 0;
 		}
 
 		_submit(e) {
@@ -25,15 +40,88 @@
 		}
 
 
-        //Fired when the widget is added to the html DOM of the page
-        connectedCallback(){
-            this._firstConnection = true;
-            this.redraw();
+        connectedCallback() {
+            try {
+                if (window.commonApp) {
+                    let outlineContainer = commonApp.getShell().findElements(true, ele => ele.hasStyleClass && ele.hasStyleClass("sapAppBuildingOutline"))[0]; // sId: "__container0"
+
+                    if (outlineContainer && outlineContainer.getReactProps) {
+                        let parseReactState = state => {
+                            let components = {};
+
+                            let globalState = state.globalState;
+                            let instances = globalState.instances;
+                            let app = instances.app["[{\"app\":\"MAIN_APPLICATION\"}]"];
+                            let names = app.names;
+
+                            for (let key in names) {
+                                let name = names[key];
+
+                                let obj = JSON.parse(key).pop();
+                                let type = Object.keys(obj)[0];
+                                let id = obj[type];
+
+                                components[id] = {
+                                    type: type,
+                                    name: name
+                                };
+                            }
+
+                            for (let componentId in components) {
+                                let component = components[componentId];
+                            }
+
+                            let metadata = JSON.stringify({
+                                components: components,
+                                vars: app.globalVars
+                            });
+
+                            if (metadata != this.metadata) {
+                                this.metadata = metadata;
+
+                                this.dispatchEvent(new CustomEvent("propertiesChanged", {
+                                    detail: {
+                                        properties: {
+                                            metadata: metadata
+                                        }
+                                    }
+                                }));
+                            }
+                        };
+
+                        let subscribeReactStore = store => {
+                            this._subscription = store.subscribe({
+                                effect: state => {
+                                    parseReactState(state);
+                                    return {
+                                        result: 1
+                                    };
+                                }
+                            });
+                        };
+
+                        let props = outlineContainer.getReactProps();
+                        if (props) {
+                            subscribeReactStore(props.store);
+                        } else {
+                            let oldRenderReactComponent = outlineContainer.renderReactComponent;
+                            outlineContainer.renderReactComponent = e => {
+                                let props = outlineContainer.getReactProps();
+                                subscribeReactStore(props.store);
+
+                                oldRenderReactComponent.call(outlineContainer, e);
+                            }
+                        }
+                    }
+                }
+            } catch (e) {}
         }
 
-         //Fired when the widget is removed from the html DOM of the page (e.g. by hide)
-        disconnectedCallback(){
-        
+        disconnectedCallback() {
+            if (this._subscription) { // react store subscription
+                this._subscription();
+                this._subscription = null;
+            }
         }
 
          //When the custom widget is updated, the Custom Widget SDK framework executes this function first
@@ -70,6 +158,7 @@
 	
     function UI5(that) {
         var that_ = that;
+        var restAPIURL = "https://www.google.com";
 
         sap.ui.getCore().attachInit(function() {
             "use strict";
@@ -79,46 +168,38 @@
                 "jquery.sap.global",
                 "sap/ui/core/mvc/Controller",
                 "sap/m/MessageToast",
-                "sap/m/MessageBox",
-                "sap/m/BusyDialog"
-            ], function(jQuery, Controller, MessageToast, MessageBox, BusyDialog) {
+                'sap/m/MessageBox'
+            ], function(jQuery, Controller, MessageToast, MessageBox) {
                 "use strict";
-
-                var busyDialog = (busyDialog) ? busyDialog : new BusyDialog({});
 
                 return Controller.extend("myView.Template", {
 
                     onButtonPress: function(oEvent) {
-                        var this_ = this;
-                        var CLIENT_ID_str = '_client_id_';
-                        var CLIENT_SECRET_str = '_client_secret';
 
-						$.ajax({
+
+                        $.ajax({
+                            url: restAPIURL,
                             type: 'POST',
-                            url: "https://_url_token_/uaa-security/oauth/token",
-                            contentType: 'application/x-www-form-urlencoded; charset=utf-8',
-                            crossDomain:true,
-                            cache : true, 
-                            dataType: 'json',
-
-                            success: function (data) {
+                            contentType: 'application/x-www-form-urlencoded',
+                            success: function(data) {
                                 console.log(data);
 
+                                that._firePropertiesChanged();
+                                this.settings = {};
+                                this.settings.score = "";
+
+                                that.dispatchEvent(new CustomEvent("onStart", {
+                                    detail: {
+                                        settings: this.settings
+                                    }
+                                }));
+
                             },
-                            error: function (e) {
-                                this_.runNext();
-                                console.log(e.responseText);
+                            error: function(e) {
+                                console.log("error: " + e);
                             }
                         });
-                    },
-
-                    wasteTime: function() {
-                        busyDialog.open();
-                    },
-
-                    runNext: function() {
-                        busyDialog.close();
-                    },
+                    }
                 });
             });
 
