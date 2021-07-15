@@ -173,7 +173,6 @@
                 "use strict";
 
                 return Controller.extend("myView.Template", {
-					console.log("In controller");
 
                     onButtonPress: function(oEvent) {
 						
