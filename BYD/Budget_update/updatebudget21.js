@@ -38,7 +38,7 @@
 		_submit(e) {
 			e.preventDefault();
 			
-			var restAPIURL = "https://random-data-api.com/api/beer/random_beer";
+			var restAPIURL = "https://cnomkebfcc866f.eu2.hana.ondemand.com/sac/public/service.xsjs/ValidateBudget";
 			$.ajax({
 				url: restAPIURL,
 				type: 'GET',
