@@ -11,7 +11,7 @@
     let tmpl = document.createElement('template');
     tmpl.innerHTML = `
 	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <button id="updatebudget"><span id="__button6-img" data-sap-ui="__button6-img" role="presentation" aria-hidden="true" data-sap-ui-icon-content="\xe03f" class="sapUiIcon sapMBtnCustomIcon sapMBtnIcon sapMBtnIconLeft" style="font-family: 'SAP\2dicons';"></span>test Valider les budgets</button>`;
+        <button id="updatebudget" class="sapFpaAppBuildingUiButton-designTime sapFpaAppBuildingUiButton sapFpaAppBuildingUiButtonStandard sap-custom-button">test Valider les budgets</button>`;
 
     customElements.define('apsia-cnomk-budgetapp', class HelloWorld1 extends HTMLElement {
 
