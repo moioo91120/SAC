@@ -11,9 +11,10 @@
     let tmpl = document.createElement('template');
     tmpl.innerHTML = `
 	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <button id="updatebudget" class="sapFpaAppBuildingUiButton-designTime sapFpaAppBuildingUiButton sapFpaAppBuildingUiButtonStandard sap-custom-button">test Valider les budgets</button>`;
+        <button id="updatebudget"> test Valider les budgets</button>
+    `;
 
-    customElements.define('apsia-cnomk-budgetapp', class HelloWorld1 extends HTMLElement {
+    customElements.define('com-sap-sample-helloworld1', class HelloWorld1 extends HTMLElement {
 
 
 		constructor() {
