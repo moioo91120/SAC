@@ -38,7 +38,7 @@
 		_submit(e) {
 			e.preventDefault();
 			
-			var restAPIURL = "https://cnomkebfcc866f.eu2.hana.ondemand.com/sac/public/service.xsjs/ValidateBudget";
+			var restAPIURL = "https://cnomkebfcc866f.eu2.hana.ondemand.com/sac/public/sac.xsjs/ValidateBudget";
 			$.ajax({
 				url: restAPIURL,
 				type: 'GET',
