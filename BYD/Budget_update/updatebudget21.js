@@ -42,9 +42,11 @@
 				contentType: 'application/x-www-form-urlencoded',
 				success: function(data) {
 					console.log(data);
+					alert("Update success!")
 				},
 				error: function(e) {
 					console.log("error: " + e);
+					alert("Update error!")
 				}
 			});
 		}
