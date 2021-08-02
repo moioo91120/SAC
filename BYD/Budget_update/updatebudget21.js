@@ -9,7 +9,7 @@
 	
 	
     let tmpl = document.createElement('template');
-    tmpl.innerHTML = '<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script><button id="updatebudget">Valider les budgets</button>';
+    tmpl.innerHTML = '<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script><button id="updatebudget">Valider les budgets (test)</button>';
 
     customElements.define('com-sap-sample-helloworld1', class HelloWorld1 extends HTMLElement {
 
