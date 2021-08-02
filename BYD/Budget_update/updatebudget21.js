@@ -34,8 +34,11 @@
 
         _popup(e) {
             e.preventDefault();
+            
+            const nextYear = new Date().getFullYear()+1;
 
-            var confirm = window.confirm("Êtes-vous sûr ?");
+            var confirm = window.confirm("Attention, cette action entraînera le changement de statut de tous les budgets de l'année " + nextYear + " en \"Validé\", confirmez-vous le traitement ?\"");
+            
             if (confirm == true) {
               this._submit();
             }
@@ -43,7 +46,7 @@
 		_submit(e) {
 			// e.preventDefault();
 			
-			var restAPIURL = "https://cnomkebfcc866f.eu2.hana.ondemand.com/sac/public/sac.xsjs/Test";
+			var restAPIURL = "https://cnomkebfcc866f.eu2.hana.ondemand.com/sac/public/sac.xsjs/ValidateBudget";
 			$.ajax({
 				url: restAPIURL,
 				type: 'GET',
