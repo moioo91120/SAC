@@ -9,7 +9,7 @@
 	
 	
     let tmpl = document.createElement('template');
-    tmpl.innerHTML = '<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script><button id="updatebudget">Valider les budgets (test)</button>';
+    tmpl.innerHTML = '<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script><button id="updatebudget">Valider les budgets</button>';
 
     customElements.define('com-sap-sample-helloworld1', class HelloWorld1 extends HTMLElement {
 
@@ -37,19 +37,13 @@
 
             var confirm = window.confirm("Êtes-vous sûr ?");
             if (confirm == true) {
-
-              alert("OK");
-
-            } else {
-
-              alert("Annuler");
-
+              this._submit();
             }
         }
 		_submit(e) {
 			e.preventDefault();
 			
-			var restAPIURL = "https://cnomkebfcc866f.eu2.hana.ondemand.com/sac/public/sac.xsjs/ValidateBudget";
+			var restAPIURL = "https://cnomkebfcc866f.eu2.hana.ondemand.com/sac/public/sac.xsjs/Test";
 			$.ajax({
 				url: restAPIURL,
 				type: 'GET',
