@@ -26,12 +26,26 @@
             this._export_settings.name = "";
 
 			
-			this._shadowRoot.getElementById("updatebudget").addEventListener("click", this._submit.bind(this));
+			this._shadowRoot.getElementById("updatebudget").addEventListener("click", this._popup.bind(this));
             this._firstConnection = false;
             this._firstConnectionUI5 = 0;
 			
 		}
 
+        _popup(e) {
+            e.preventDefault();
+
+            var confirm = window.confirm("Êtes-vous sûr ?");
+            if (confirm == true) {
+
+              alert("OK");
+
+            } else {
+
+              alert("Annuler");
+
+            }
+        }
 		_submit(e) {
 			e.preventDefault();
 			
