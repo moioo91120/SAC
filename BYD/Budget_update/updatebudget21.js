@@ -41,7 +41,7 @@
             }
         }
 		_submit(e) {
-			e.preventDefault();
+			// e.preventDefault();
 			
 			var restAPIURL = "https://cnomkebfcc866f.eu2.hana.ondemand.com/sac/public/sac.xsjs/Test";
 			$.ajax({
