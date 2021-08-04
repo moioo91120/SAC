@@ -45,7 +45,9 @@
         }
 		_submit(e) {
 			// e.preventDefault();
-			
+
+			const nextYear = new Date().getFullYear()+1;
+
 			var restAPIURL = "https://cnomkebfcc866f.eu2.hana.ondemand.com/sac/public/sac.xsjs/ValidateBudget";
 			$.ajax({
 				url: restAPIURL,
@@ -53,11 +55,11 @@
 				contentType: 'application/x-www-form-urlencoded',
 				success: function(data) {
 					console.log(data);
-					alert("Update success!")
+					alert("Budgets validés !")
 				},
 				error: function(e) {
 					console.log("error: " + e);
-					alert("Update error!")
+					alert("Échec : veuillez réessayer et contacter Apsia si le problème persiste.")
 				}
 			});
 		}
